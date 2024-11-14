@@ -13,10 +13,14 @@ def elimina():
     e = int(input("inserisci elemento da eliminare: "))
     lista.pop(e-1)
 
+def conta():
+    print(len(lista))
+
 while True:
     print("1. Aggiungi elementi alla lista ")
     print("2. Visualizza elementi della lista ")
     print("3. Elimina elementi della lista ")
+    print("4. Conta elementi della lista ")
     print("0. Esci dal Menu' ")
     a= int(input())
     
@@ -26,6 +30,8 @@ while True:
         visualizza()
     elif a==3:
        elimina()
+    elif a==4:
+        conta()
     elif a==0 :
         break
    
