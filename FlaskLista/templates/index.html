@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<h1>Per ora funziona tutto!</h1>
+    <!--creazione di una condizione if per vedere la lista spesa-->
+    <h1>La tua Lista della Spesa</h1>
+    {% if lista %}
+    <ul>
+    {% for elemento in lista %}
+    <li>{{ elemento }}</li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>La lista è vuota.</p>
+    {% endif %}
 </body>
 </html>

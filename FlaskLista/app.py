@@ -1,5 +1,14 @@
 from flask import Flask, render_template
 #render_template: collegare file HTML.
+lista_spesa = []
+#creazione di una funzione che aggiunge elementi alla lista spesa
+@app.route('/aggiungi', methods=['POST'])
+def aggiungi():
+    elemento = request.form['elemento']
+    if elemento:
+        lista_spesa.append(elemento)
+    return redirect(url_for('home'))
+
 app = Flask(__name__)
 
 @app.route('/')
