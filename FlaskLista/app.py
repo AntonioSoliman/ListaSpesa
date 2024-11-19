@@ -9,6 +9,13 @@ def aggiungi():
         lista_spesa.append(elemento)
     return redirect(url_for('home'))
 
+#creazione di una funzione che rimuove elementi dalla lista
+@app.route('/rimuovi/<int:indice>', methods=['POST'])
+def rimuovi(indice):
+        if 0 <= indice < len(lista_spesa):
+            lista_spesa.pop(indice)
+        return redirect(url_for('home'))
+
 app = Flask(__name__)
 
 @app.route('/')
