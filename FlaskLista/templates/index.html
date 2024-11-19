@@ -16,5 +16,13 @@
     {% else %}
     <p>La lista è vuota.</p>
     {% endif %}
+
+    <!--collegamento della funzione aggiunfi con html-->
+    <form action="/aggiungi" method="post">
+        <input type="text" name="elemento" placeholder="Aggiungi un elemento"
+        required>
+        <button type="submit">Aggiungi</button>
+    </form>
+
 </body>
 </html>
