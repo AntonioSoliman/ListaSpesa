@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">  
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista della Spesa</title>
 </head>
 <body>
-     <!--creazione di una condizione if per vedere la lista spesa-->
+    <!-- Creazione di una condizione if per vedere la lista spesa -->
     <h1>La tua Lista della Spesa</h1>
     {% if lista %}
-    <ul>
-    {% for elemento in lista %}
-    <li>
-    {{ elemento }}
-    <!--collegamento della funzione rimuovi con html-->
-    <form action="/rimuovi/{{ loop.index0 }}" method="post"
-    
-    style="display:inline;">
-    
-    <button type="submit">Rimuovi</button>
-    </form>
-    </li>
-    {% endfor %}
-    </ul>
+        <ul>
+            {% for elemento in lista %}
+                <li>
+                    {{ elemento }}
+                    <!-- Collegamento della funzione rimuovi con HTML -->
+                    <form action="/rimuovi/{{ loop.index0 }}" method="post" style="display:inline;">
+                        <button type="submit">Rimuovi</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
     {% else %}
-    <p>La lista è vuota.</p>
+        <p>La lista è vuota.</p>
     {% endif %}
-    <!--collegamento della funzione aggiungi con html-->
+
+    <!-- Collegamento della funzione aggiungi con HTML -->
     <form action="/aggiungi" method="post">
-    <input type="text" name="elemento" placeholder="Aggiungi un elemento"
-    required>
-    <button type="submit">Aggiungi</button>
+        <input type="text" name="elemento" placeholder="Aggiungi un elemento" required>
+        <button type="submit">Aggiungi</button>
     </form>
 </body>
 </html>

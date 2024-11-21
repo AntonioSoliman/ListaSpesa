@@ -5,7 +5,6 @@ app = Flask(__name__)
 lista_spesa = []
 #creazione di una funzione che aggiunge elementi alla lista spesa
 @app.route('/aggiungi', methods=['POST'])
-
 def aggiungi():
     elemento = request.form['elemento']
     if elemento:
