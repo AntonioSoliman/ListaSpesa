@@ -1,9 +1,11 @@
-from flask import Flask, render_template,request,redirect,url_for
-#render_template: collegare file HTML.
+from flask import Flask, render_template, request, redirect, url_for
+
 app = Flask(__name__)
 
+# Lista della spesa
 lista_spesa = []
-#creazione di una funzione che aggiunge elementi alla lista spesa
+
+# Aggiungere un elemento alla lista
 @app.route('/aggiungi', methods=['POST'])
 def aggiungi():
     elemento = request.form['elemento']
@@ -11,17 +13,17 @@ def aggiungi():
         lista_spesa.append(elemento)
     return redirect(url_for('home'))
 
-#creazione di una funzione che rimuove elementi dalla lista
+# Rimuovere un elemento dalla lista
 @app.route('/rimuovi/<int:indice>', methods=['POST'])
 def rimuovi(indice):
-        if 0 <= indice < len(lista_spesa):
-            lista_spesa.pop(indice)
-        return redirect(url_for('home'))
+    if 0 <= indice < len(lista_spesa):
+        lista_spesa.pop(indice)
+    return redirect(url_for('home'))
 
-
+# Pagina principale
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', lista=lista_spesa)
 
 if __name__ == '__main__':
     app.run(debug=True)
