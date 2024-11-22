@@ -1,36 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista della Spesa</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <!-- Creazione di una condizione if per vedere la lista spesa -->
-    <h1>La tua Lista della Spesa</h1>
-    {% if lista %}
-        <ul>
-            {% for elemento in lista %}
-                <li>
-                    {{ elemento }}
-                    <!-- Collegamento della funzione rimuovi con HTML -->
-                     
-                    <form action="/rimuovi/{{ loop.index0 }}" method="post" style="display:inline;">
-                        
-                        <button type="submit">Rimuovi</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>La lista è vuota.</p>
-    {% endif %}
+    <header>
+        <h1>La tua Lista della Spesa</h1>
+    </header>
 
-    <!-- Collegamento della funzione aggiungi con HTML -->
-    <form action="/aggiungi" method="post">
-        <input type="text" name="elemento" placeholder="Aggiungi un elemento" required>
-        <button type="submit">Aggiungi</button>
-    </form>
+    <main>
+        <!-- Verifica se la lista contiene elementi -->
+        {% if lista %}
+            <ul>
+                {% for elemento in lista %}
+                    <li>
+                        {{ elemento }}
+                        <!-- Modulo per rimuovere un elemento -->
+                        <form action="/rimuovi/{{ loop.index0 }}" method="post" style="display:inline;">
+                            <button type="submit">Rimuovi</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>La lista è vuota.</p>
+        {% endif %}
+
+        <!-- Modulo per aggiungere un nuovo elemento -->
+        <form action="/aggiungi" method="post">
+            <input type="text" name="elemento" placeholder="Aggiungi un elemento" required>
+            <button type="submit">Aggiungi</button>
+        </form>
+    </main>
 </body>
 </html>
