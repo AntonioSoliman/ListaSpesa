@@ -17,14 +17,20 @@
             <ul>
                 {% for elemento in lista %}
                     <li>
-                        {{ elemento }}
+                        {{ elemento.elemento }}
                         <!-- Modulo per rimuovere un elemento -->
-                        <form action="/rimuovi/{{ loop.index0 }}" method="post" style="display:inline;">
+                        <form action="/rimuovi/{{ elemento.id }}" method="post" style="display:inline;">
                             <button type="submit">Rimuovi</button>
                         </form>
                     </li>
                 {% endfor %}
             </ul>
+            <!-- Modulo per svuotare l'intera lista -->
+            <form action="/svuota" method="post" style="margin-top: 20px;">
+                <button type="submit" style="background-color: red; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+                    Svuota Lista
+                </button>
+            </form>
         {% else %}
             <p>La lista è vuota.</p>
         {% endif %}

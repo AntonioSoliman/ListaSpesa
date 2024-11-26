@@ -1,40 +1,53 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
 
-#configurazione db
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://lista_spesa.db'
+# Configurazione del database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lista_spesa.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# inizializza SQLAlchemy
-db.init_app(app)
+# Inizializza SQLAlchemy
+db = SQLAlchemy(app)
 
-#crea il database se non esiste
+# Modello per la tabella ListaSpesa
+class ListaSpesa(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    elemento = db.Column(db.String(100), nullable=False)
+
+# Crea il database se non esiste
 with app.app_context():
     db.create_all()
-
-# Lista della spesa
-lista_spesa = []
 
 # Aggiungere un elemento alla lista
 @app.route('/aggiungi', methods=['POST'])
 def aggiungi():
     elemento = request.form['elemento']
     if elemento:
-        lista_spesa.append(elemento)
+        nuovo_elemento = ListaSpesa(elemento=elemento)
+        db.session.add(nuovo_elemento)
+        db.session.commit()
     return redirect(url_for('home'))
 
 # Rimuovere un elemento dalla lista
 @app.route('/rimuovi/<int:indice>', methods=['POST'])
 def rimuovi(indice):
-    if 0 <= indice < len(lista_spesa):
-        lista_spesa.pop(indice)
+    elemento = ListaSpesa.query.get_or_404(indice)
+    db.session.delete(elemento)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+# Svuota tutti gli elementi dalla lista
+@app.route('/svuota', methods=['POST'])
+def svuota():
+    ListaSpesa.query.delete()
+    db.session.commit()
     return redirect(url_for('home'))
 
 # Pagina principale
 @app.route('/')
 def home():
+    lista_spesa = ListaSpesa.query.all()
     return render_template('index.html', lista=lista_spesa)
 
 if __name__ == '__main__':
