@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+from models import db, ListaSpesa  # Importa il database e il modello
 
 app = Flask(__name__)
 
@@ -7,13 +7,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lista_spesa.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Inizializza SQLAlchemy
-db = SQLAlchemy(app)
-
-# Modello per la tabella ListaSpesa
-class ListaSpesa(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    elemento = db.Column(db.String(100), nullable=False)
+# Inizializza SQLAlchemy con l'app Flask
+db.init_app(app)
 
 # Crea il database se non esiste
 with app.app_context():
